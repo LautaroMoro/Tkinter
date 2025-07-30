@@ -81,3 +81,4 @@ class CalculadoraVista():
         except Exception as e:
             self.e_texto.delete(0, END)
             self.e_texto.insert(0, "Error")
+            print(f"Error al evaluar la expresión: {e}")
