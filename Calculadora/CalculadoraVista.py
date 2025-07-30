@@ -1,6 +1,4 @@
 from tkinter import *
-from Calculadora import *
-from Calculadora import sumar, restar, multiplicar, dividir
 from Calculadora import calcular
 
 class CalculadoraVista():
@@ -25,9 +23,9 @@ class CalculadoraVista():
         self.boton_restar = Button(ventana, text="-", width=5, height=5, command=lambda: click_boton("-"))
         self.boton_multiplicar = Button(ventana, text="x", width=5, height=5, command=lambda: click_boton("*"))
 
-        self.boton_igual = Button(ventana, text="=", width=5, height=5, command=lambda: )
+        self.boton_igual = Button(ventana, text="=", width=5, height=5, command=lambda: self.evaluar())
         self.boton_decimal = Button(ventana, text=".", width=5, height=5, command=lambda: click_boton("."))
-        self.boton_borrar = Button(ventana, text="AC", width=5, height=5,command=lambda: click_boton('AC'))
+        self.boton_borrar = Button(ventana, text="AC", width=5, height=5,command=lambda: self.borrar())
         self.boton_parentesis1 = Button(ventana, text="(", width=5, height=5, command=lambda: click_boton("("))
         self.boton_parentesis2 = Button(ventana, text=")", width=5, height=5, command=lambda: click_boton(")"))
 
@@ -59,3 +57,27 @@ class CalculadoraVista():
             texto_actual = self.e_texto.get()
             self.e_texto.delete(0, END)
             self.e_texto.insert(0, str(texto_actual) + str(valor))
+    def borrar(self):
+        self.e_texto.delete(0, END)
+    def evaluar(self):
+        expresion = self.e_texto.get()
+
+        try:
+            # Buscar la operación
+            for op in ["+", "-", "*", "/"]:
+                if op in expresion:
+                    partes = expresion.split(op)
+                    if len(partes) != 2:
+                        raise ValueError("Formato inválido")
+                    a = float(partes[0].strip())
+                    b = float(partes[1].strip())
+                    resultado = calcular(op, a, b)
+                    self.e_texto.delete(0, END)
+                    self.e_texto.insert(0, str(resultado))
+                    return
+
+            raise ValueError("Operación no reconocida")
+
+        except Exception as e:
+            self.e_texto.delete(0, END)
+            self.e_texto.insert(0, "Error")

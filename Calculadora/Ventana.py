@@ -14,8 +14,7 @@ class Ventana():
     def abrir_calculadora(self):
         self.ventana.destroy()
         ventana_calculadora = Tk()
-        calculadora = CalculadoraVista(ventana_calculadora)
-        calculadora.title("Calculadora")
-        Label(calculadora.ventana, text="Pantalla con calculadora").pack()
-
-app = Ventana()
+        CalculadoraVista(ventana_calculadora)
+        ventana_calculadora.mainloop()
+if __name__ == "__main__":
+    Ventana()
